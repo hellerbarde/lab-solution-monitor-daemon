@@ -27,7 +27,7 @@ var _ = require("lodash");
 var mqtt = require('mqtt');
 var client  = mqtt.connect("mqtt://192.168.1.1");
 
-// Require the Winston Logger
+// Require the Logger
 var logger = require('./logger.js');
 
 // Require the MongoDB libraries and connect to the database
@@ -47,14 +47,9 @@ db.once('open', function (callback) {
 var DataModel = require('intel-commercial-edge-network-database-models').DataModel;
 var SensorModel = require('intel-commercial-edge-network-database-models').SensorModel;
 
-if(config.debug != "true") {
-    logger.remove(winston.transports.File);
-    logger.remove(winston.transports.Console);
-}
-
 logger.info("Edge Device Daemon is starting");
 // Connect to the MQTT server
-var mqttClient  = mqtt.connect(config.mqtt.url);
+var mqttClient  = mqtt.connect("mqtt://localhost");
 
 // MQTT connection function
 mqttClient.on('connect', function () {
